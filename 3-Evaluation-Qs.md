@@ -5,7 +5,7 @@
 Le modèle semble bien détecter les in-liners ( 1000/1002 ), mais pas les out-liners ( 5/35 ). Comme le but est de detecter les outliners, le modèle ne semble pas si bon.
 
 **Questions 2**  
-exactitude = (1000+2) / (1000+2+30+5) = 0.97
+exactitude = (1000+2) / (1000+2+30+5) = 0.97  
 exactitude pondérée = ( (5/35) + (1000/1002) ) / 2 = 0.57
 
 **Questions 3**  
