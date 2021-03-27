@@ -1,3 +1,0 @@
-Dans le sujet il manque 'import matplotlib.pyplot' et
-'matplotlib.pyplot.show()' après le sns.pairplot(...)
- pour afficher les diagramme.
