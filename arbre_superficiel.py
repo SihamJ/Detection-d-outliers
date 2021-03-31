@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import csv
+from collections import Counter  # Used for counting
 
 # Importer la structure de données Feuille
 
@@ -21,7 +22,7 @@ plt.scatter(x, y, s=20, color='#10bbcf', label='Liers Data Frame')
 
 plt.xlabel('x')
 plt.ylabel('y')
-plt.show()
+# plt.show()
 x = np.array(x)
 y = np.array(y)
 data = (x, y)
@@ -81,43 +82,51 @@ def k_means(data, nb_clusters):
 classes, seuils = k_means(attr, 2)
 feuille = Feuille(attribut=attribut, lower_split=seuils[0], higher_split=seuils[1])
 
-
 ##4.2  Arbre superficiel TO DO BEFORE 28-03
 
 from Node import Node
 
+
 def buildDecisionTree(D, central, attribIdx):
     """
+    
     :param D:  un ensemble de donne de taille Card(D), chaque donnee a n attributs
                 numérotés de 1 à n
     :param central: indique si le noeud en cours de création provient de la branche centrale de
             son parent ou non, par convention => True pour la racine
-    :param attribIdx:   ?
+    :param attribIdx:   liste pour indexer les parametres    !!! (not sur) !!!!
     :return:     un arbre de décision
     """
-    if(len(D)) >= 4:
-        if(len(attribIdx)) >= 2:
+    if (len(D)) >= 4:
+        if (len(attribIdx)) >= 2:
+            print("coucou 1")
+
             currentAttrib = attr
             a = feuille.lower_split
             b = feuille.higher_split
-            D1 = [x for x in attr if x < feuille.lower_split]
-            Dm = [x for x in attr if x < feuille.lower_split & x > feuille.higher_split]
+            Dl = [x for x in attr if x < feuille.lower_split] #liste
+            Dm = [x for x in attr if (feuille.lower_split >= x > feuille.higher_split)]
             Dr = [x for x in attr if x > feuille.higher_split]
-            attribIdx = [x for x in currentAttrib if x != attribIdx]
-            L = buildDecisionTree(D1, False, attribIdx)
+            attribIdx = [x for x in currentAttrib if x not in attribIdx]
+            L = buildDecisionTree(Dl, False, attribIdx)
             M = buildDecisionTree(Dm, True, attribIdx)
             R = buildDecisionTree(Dr, False, attribIdx)
-            return Node(currentAttrib,a,b,L,M,R)
+            return Node(currentAttrib, a, b, L, M, R)
         else:
-            return DecisionLeaf(D,attribIdx)
+            print("coucou 2")
+            return DecisionLeaf(D, attribIdx)
     elif len(D) < 4:
-        if central == True:
+        if central:
+            print("coucou 3")
             return DirectDecision(outlier=False)
         else:
+            print("coucou 4")
             return DirectDecision(outlier=True)
 
-S
 
-buildDecisionTree(data, True, x)
+attribIdx = list(range(1, len(data)))
 
-#RESTE A TESTER LES M'IMPLIMENTATION
+tree = buildDecisionTree(data, True, attribIdx)
+
+
+# EVALUATION
