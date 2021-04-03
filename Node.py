@@ -15,9 +15,10 @@ class Feuille:
 
 class DecisionLeaf:
 
-    def __init__(self, data, attribIdx):
-        self.D = data
+    def __init__(self, D, attribIdx):
+        self.data = D
         self.attribIdx = attribIdx
+        self.node = None # nodes
 
 
 class DirectDecision:
@@ -26,14 +27,16 @@ class DirectDecision:
 
 class Node:
 
-    def __init__(self, currentAttrib,  a, b, L, M ,R):
+    def __init__(self):
+        self.currentAttrib = None
+        self.a = None
+        self.b = None
+        self.R = []
+        self.L = []
+        self.M = []
 
-        self.currentAttrib = currentAttrib
-        self.a = a
-        self.b = b
-        self.left = L
-        self.centre = M
-        self.right = R
+
+
 
     def predir(self, point):
         if (point[Feuille.attribut] < Feuille.lower_split or point[Feuille.attribut] > Feuille.higher_split):

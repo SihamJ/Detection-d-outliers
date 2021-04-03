@@ -5,10 +5,11 @@ class Feuille:
         self.higher_split = higher_split
 
     def predir(self,point):
+        #remarque à remonter il manque  le signe "égale" de "<= "
         if(point[self.attribut]<self.lower_split or point[self.attribut]>self.higher_split):
             return 1
         else:
-            return 0
+            return 0     #outlier
 
 
 class DecisionLeaf:
@@ -18,6 +19,8 @@ class DecisionLeaf:
         self.attribIdx = attribIdx
 
 
-class DirectDecision:
-    def __init__(self,outlier):
-        self.outlier = outlier
+def DirectDecision(outlier):
+        if outlier == True:
+            return 1
+        else:
+            return 0

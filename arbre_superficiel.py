@@ -97,36 +97,43 @@ def buildDecisionTree(D, central, attribIdx):
     :param attribIdx:   liste pour indexer les parametres    !!! (not sur) !!!!
     :return:     un arbre de décision
     """
+
     if (len(D)) >= 4:
         if (len(attribIdx)) >= 2:
-            print("coucou 1")
+            classes, seuils = k_means(D, 2)
 
-            currentAttrib = attr
-            a = feuille.lower_split
-            b = feuille.higher_split
-            Dl = [x for x in attr if x < feuille.lower_split] #liste
-            Dm = [x for x in attr if (feuille.lower_split >= x > feuille.higher_split)]
-            Dr = [x for x in attr if x > feuille.higher_split]
-            attribIdx = [x for x in currentAttrib if x not in attribIdx]
-            L = buildDecisionTree(Dl, False, attribIdx)
-            M = buildDecisionTree(Dm, True, attribIdx)
-            R = buildDecisionTree(Dr, False, attribIdx)
-            return Node(currentAttrib, a, b, L, M, R)
+            CNode.currentAttrib = attr
+            CNode.a = seuils[0]
+            CNode.b = seuils[1]
+
+            Dl = [x for x in attr if x <= CNode.a] #liste droite
+            Dm = [x for x in attr if x > CNode.a and x <= CNode.b] # liste du centre
+            Dr = [x for x in attr if x > CNode.b] # liste de gauche
+
+            CNode.attribIdx = [i for i in range(len(CNode.currentAttrib)) if CNode.currentAttrib[i] in D]
+
+            CNode.L=  buildDecisionTree(Dl, False, CNode.attribIdx)
+            CNode.M = buildDecisionTree(Dm, True, CNode.attribIdx)
+            CNode.R = buildDecisionTree(Dr, False, CNode.attribIdx)
+            print("coucou")
+            return CNode
         else:
             print("coucou 2")
-            return DecisionLeaf(D, attribIdx)
+            return (D,attribIdx)
     elif len(D) < 4:
         if central:
             print("coucou 3")
+            D
             return DirectDecision(outlier=False)
         else:
             print("coucou 4")
-            return DirectDecision(outlier=True)
+            return  DirectDecision(outlier=True)
 
 
-attribIdx = list(range(1, len(data)))
+attribIdx = list(range(1, len(data)+1))
+CNode = Node()
 
-tree = buildDecisionTree(data, True, attribIdx)
+buildDecisionTree(attr, True, attribIdx)
 
 
 # EVALUATION
