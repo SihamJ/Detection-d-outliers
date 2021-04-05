@@ -85,7 +85,10 @@ class DirectDecision:
         return tp, tn, fp, fn, exactitude, exactitude_ponderee, precision, rappel
 
     def predict(self, data):
-        return self.outlier
+        if self.outlier == True:
+            return 1
+        else:
+            return 0
 
 class Node:
     def __init__(self, currentAttrib = None, a = None, b = None, L = None, M = None, R = None):
