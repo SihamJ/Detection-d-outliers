@@ -82,7 +82,6 @@ class Functions:
         elif len(D) < 4:
             nb = len(D)
             if central:
-                return DirectDecision(D, nb, outlier = False)
+                return DirectDecision(D, nb, outlier=False)
             else:
-                return DirectDecision(D, nb, outlier = True)
-
+                return DirectDecision(D, nb, outlier=True)
