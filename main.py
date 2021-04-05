@@ -42,7 +42,7 @@ attribIdx = [c for c in range( data.shape[1] - 1 )]
 print('\n\n4-1 Feuille de décision:\n')
 
 attr, listAttr = Functions.Functions.meilleur_attribut( data.T, attribIdx )
-classes, seuils = Functions.Functions.k_means( data.T[attr] ) 
+classes, seuils = Functions.Functions.k_means( data.T[attr] )
 dl = DecisionLeaf(data, attr)
 tp, tn, fp, fn, exactitude, exactitude_ponderee, precision, rappel = dl.evaluer()
 classes = dl.classes()

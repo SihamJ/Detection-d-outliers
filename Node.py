@@ -5,7 +5,8 @@ import numpy as np
 
 class DecisionLeaf():
 
-    def __init__(self, data = None, currentAttrib = None):
+
+    def __init__(self, data=None, currentAttrib=None):
         self.currentAttrib = currentAttrib
         self.D = data
         clusters, cluster_centers = Functions.Functions.k_means(self.D.T[self.currentAttrib])
