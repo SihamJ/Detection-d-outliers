@@ -60,8 +60,9 @@ class Functions:
         clusters, cluster_centers = cls.k_means(D.T[currentAttrib])
         return currentAttrib, listAttr, cluster_centers[0], cluster_centers[1]
 
+    # Premier Algo: Question 4-2
     @classmethod
-    def buildDecisionTree(cls, D, central, attribIdx):
+    def buildDecisionTree_bis(cls, D, central, attribIdx):
         currentAttrib = 0
         if len(D) >= 4:
             if len(attribIdx) >= 2:
@@ -70,16 +71,48 @@ class Functions:
                 Dl = np.array([x for x in D if x[currentAttrib] <= a]) #liste droite
                 Dm = np.array([x for x in D if x[currentAttrib] > a and x[currentAttrib] <= b]) # liste du centre
                 Dr = np.array([x for x in D if x[currentAttrib] > b]) # liste de gauche
-                L = cls.buildDecisionTree(Dl, False, attribIdx)
-                M = cls.buildDecisionTree(Dm, True, attribIdx)
-                R = cls.buildDecisionTree(Dr, False, attribIdx)
+                L = cls.buildDecisionTree_bis(Dl, False, attribIdx)
+                M = cls.buildDecisionTree_bis(Dm, True, attribIdx)
+                R = cls.buildDecisionTree_bis(Dr, False, attribIdx)
                 return Node(currentAttrib, a, b, L, M, R)
 
             else:
                 currentAttrib = attribIdx[0]
                 return DecisionLeaf(D,currentAttrib)
+        else:
+            nb = len(D)
+            if central:
+                return DirectDecision(D, nb, outlier=False)
+            else:
+                return DirectDecision(D, nb, outlier=True)
 
-        elif len(D) < 4:
+    # Algo amélioré: Question 4-3
+    @classmethod
+    def buildDecisionTree(cls, D, central, attribIdx, h_max):
+        currentAttrib = 0
+        if len(D) >= 4:
+            currentAttrib, listAttr, a, b = cls.getSplitParameters( attribIdx, D)
+            if h_max > 1:#algo précedent: len(attribIdx) >= 2:
+                #algo précedent: attribIdx = np.delete(attribIdx, currentAttrib, 0)
+                Dl = np.array([x for x in D if x[currentAttrib] <= a]) #liste droite
+                Dm = np.array([x for x in D if x[currentAttrib] > a and x[currentAttrib] <= b]) # liste du centre
+                Dr = np.array([x for x in D if x[currentAttrib] > b]) # liste de gauche
+                L = cls.buildDecisionTree(Dl, False, attribIdx, h_max-1)
+                M = cls.buildDecisionTree(Dm, True, attribIdx, h_max-1)
+                R = cls.buildDecisionTree(Dr, False, attribIdx, h_max-1)
+                return Node(currentAttrib, a, b, L, M, R)
+
+            else:
+                if len(D) >= 4:
+                    return DecisionLeaf(D,currentAttrib)
+                else:
+                    nb = len(D)
+                    if central:
+                        return DirectDecision(D, nb, outlier=False)
+                    else:
+                        return DirectDecision(D, nb, outlier=True)
+
+        else:
             nb = len(D)
             if central:
                 return DirectDecision(D, nb, outlier=False)

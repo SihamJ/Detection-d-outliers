@@ -40,11 +40,7 @@ class DecisionLeaf():
                 else:
                     fn = fn + 1
 
-        exactitude = (tp + tn) / (tp+tn+fp+fn)
-        exactitude_ponderee = ( (tp/(tp+fn)) + (tn/(tn+fp)) ) / 2
-        precision = tp/(tp+fp)
-        rappel = tp/(fn+tp)
-        return tp, tn, fp, fn, exactitude, exactitude_ponderee, precision, rappel
+        return tp, tn, fp, fn
 
     def predict(self, data):
         if data[self.currentAttrib] <= self.a or data[self.currentAttrib] > self.b:
@@ -77,12 +73,7 @@ class DirectDecision:
                 else:
                     fn = fn + 1
 
-        exactitude = (tp + tn) / (tp+tn+fp+fn)
-        exactitude_ponderee = ( (tp/(tp+fn)) + (tn/(tn+fp)) ) / 2
-        precision = tp/(tp+fp)
-        rappel = tp/(fn+tp)
-
-        return tp, tn, fp, fn, exactitude, exactitude_ponderee, precision, rappel
+        return tp, tn, fp, fn
 
     def predict(self, data):
         if self.outlier == True:
@@ -100,23 +91,19 @@ class Node:
         self.M = M
 
     def evaluer(self):
-        tp1, tn1, fp1, fn1, exactitude, exactitude_ponderee, precision, rappel = self.L.evaluer()
-        tp2, tn2, fp2, fn2, exactitude, exactitude_ponderee, precision, rappel = self.M.evaluer()
-        tp3, tn3, fp3, fn3, exactitude, exactitude_ponderee, precision, rappel = self.R.evaluer()
+        tp1, tn1, fp1, fn1 = self.L.evaluer()
+        tp2, tn2, fp2, fn2 = self.M.evaluer()
+        tp3, tn3, fp3, fn3 = self.R.evaluer()
         tp = tp1+tp2+tp3
         tn = tn1+tn2+tn3
         fp = fp1+fp2+fp3
         fn = fn1+fn2+fn3
-        exactitude = (tp + tn) / (tp+tn+fp+fn)
-        exactitude_ponderee = ( (tp/(tp+fn)) + (tn/(tn+fp)) ) / 2
-        precision = tp/(tp+fp)
-        rappel = tp/(fn+tp)
-        return tp, tn, fp, fn, exactitude, exactitude_ponderee, precision, rappel
+        return tp, tn, fp, fn
 
     def predict(self, data):
         if data[self.currentAttrib] <= self.a:
             return self.L.predict(data)
         elif data[self.currentAttrib] > self.b:
-            return self.M.predict(data)
-        else:
             return self.R.predict(data)
+        else:
+            return self.M.predict(data)
