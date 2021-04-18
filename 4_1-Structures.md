@@ -2,7 +2,7 @@
 
 
 Pour notre arbre superficiel, il nous faut creer 3 classes, qui sont implimentées dans le fichier 
- ``'Node.py' ``  
+ ``'Node.py'``  
 
 
 - **DecisionLeaf**:
