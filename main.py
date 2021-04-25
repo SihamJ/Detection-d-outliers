@@ -21,12 +21,19 @@ with open('data.csv', 'r') as csvfile:
         y.append(float(row[1]))
         c.append(float(row[2]))
 
-plt.scatter(x, y, s=20, color='#10bbcf', label='Liers Data Frame')
+color = [0 for c in range(len(c))]
+for j in range(len(c)):
+    if c[j] == 0:
+        color[j] = '#10bbcf'
+    else:
+        color[j] = '#eecc10'
 
+plt.scatter(x, y, c=color,s=20, cmap='viridis')
 plt.xlabel('x')
 plt.ylabel('y')
 print('\nRépartitions des données:\n')
 plt.show()
+
 x = np.array(x)
 y = np.array(y)
 data = (x, y, c)
