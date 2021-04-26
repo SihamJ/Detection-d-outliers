@@ -50,9 +50,8 @@ class DecisionLeaf():
 
 
 class DirectDecision:
-    def __init__(self, D, nb, outlier):
+    def __init__(self, D, outlier):
         self.outlier = outlier
-        self.nb = nb
         self.D = D
 
     def evaluer(self):
