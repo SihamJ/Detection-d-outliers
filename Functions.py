@@ -82,9 +82,9 @@ class Functions:
         else:
             nb = len(D)
             if central:
-                return DirectDecision(D, nb, outlier=False)
+                return DirectDecision(D, outlier=False)
             else:
-                return DirectDecision(D, nb, outlier=True)
+                return DirectDecision(D, outlier=True)
 
     # Algo amélioré: Question 4-3
     @classmethod
@@ -108,13 +108,13 @@ class Functions:
                 else:
                     nb = len(D)
                     if central:
-                        return DirectDecision(D, nb, outlier=False)
+                        return DirectDecision(D, outlier=False)
                     else:
-                        return DirectDecision(D, nb, outlier=True)
+                        return DirectDecision(D, outlier=True)
 
         else:
             nb = len(D)
             if central:
-                return DirectDecision(D, nb, outlier=False)
+                return DirectDecision(D, outlier=False)
             else:
-                return DirectDecision(D, nb, outlier=True)
+                return DirectDecision(D, outlier=True)
