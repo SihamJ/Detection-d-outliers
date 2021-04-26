@@ -78,9 +78,8 @@ class Functions:
 
             else:
                 currentAttrib = attribIdx[0]
-                return DecisionLeaf(D,currentAttrib)
+                return DecisionLeaf(D, currentAttrib)
         else:
-            nb = len(D)
             if central:
                 return DirectDecision(D, outlier=False)
             else:
@@ -106,14 +105,12 @@ class Functions:
                 if len(D) >= 4:
                     return DecisionLeaf(D,currentAttrib)
                 else:
-                    nb = len(D)
                     if central:
                         return DirectDecision(D, outlier=False)
                     else:
                         return DirectDecision(D, outlier=True)
 
         else:
-            nb = len(D)
             if central:
                 return DirectDecision(D, outlier=False)
             else:
